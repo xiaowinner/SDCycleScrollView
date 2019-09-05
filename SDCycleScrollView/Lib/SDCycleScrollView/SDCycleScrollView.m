@@ -449,6 +449,18 @@ NSString * const ID = @"SDCycleScrollViewCell";
     [_mainView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:targetIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
 }
 
+- (void)scrollToIndex:(int)targetIndex animation:(BOOL)animation
+{
+    if (targetIndex >= _totalItemsCount) {
+        if (self.infiniteLoop) {
+            targetIndex = _totalItemsCount * 0.5;
+            [_mainView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:targetIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        }
+        return;
+    }
+    [_mainView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:targetIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:animation];
+}
+
 - (int)currentIndex
 {
     if (_mainView.sd_width == 0 || _mainView.sd_height == 0) {
@@ -684,6 +696,19 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (0 == _totalItemsCount) return;
     
     [self scrollToIndex:(int)(_totalItemsCount * 0.5 + index)];
+    
+    if (self.autoScroll) {
+        [self setupTimer];
+    }
+}
+
+- (void)makeScrollViewScrollToIndex:(NSInteger)index animation:(BOOL)animation {
+    if (self.autoScroll) {
+        [self invalidateTimer];
+    }
+    if (0 == _totalItemsCount) return;
+    
+    [self scrollToIndex:(int)(_totalItemsCount * 0.5 + index) animation:animation];
     
     if (self.autoScroll) {
         [self setupTimer];

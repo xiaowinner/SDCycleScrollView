@@ -133,6 +133,7 @@ typedef enum {
 
 /** 可以调用此方法手动控制滚动到哪一个index */
 - (void)makeScrollViewScrollToIndex:(NSInteger)index;
+- (void)makeScrollViewScrollToIndex:(NSInteger)index animation:(BOOL)animation;
 
 /** 解决viewWillAppear时出现时轮播图卡在一半的问题，在控制器viewWillAppear时调用此方法 */
 - (void)adjustWhenControllerViewWillAppera;
