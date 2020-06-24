@@ -300,7 +300,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
     
     _imagePathsGroup = imagePathsGroup;
     
-    _totalItemsCount = self.infiniteLoop ? self.imagePathsGroup.count * 100 : self.imagePathsGroup.count;
+    _totalItemsCount = ((imagePathsGroup.count > 1) && self.infiniteLoop) ? imagePathsGroup.count * 100 : imagePathsGroup.count;
     
     if (imagePathsGroup.count > 1) { // 由于 !=1 包含count == 0等情况
         self.mainView.scrollEnabled = YES;
@@ -693,7 +693,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (self.autoScroll) {
         [self invalidateTimer];
     }
-    if (0 == _totalItemsCount) return;
+    if (_totalItemsCount <= 1) return;
     
     [self scrollToIndex:(int)(_totalItemsCount * 0.5 + index)];
     
@@ -706,7 +706,7 @@ NSString * const ID = @"SDCycleScrollViewCell";
     if (self.autoScroll) {
         [self invalidateTimer];
     }
-    if (0 == _totalItemsCount) return;
+    if (_totalItemsCount <= 1) return;
     
     [self scrollToIndex:(int)(_totalItemsCount * 0.5 + index) animation:animation];
     
