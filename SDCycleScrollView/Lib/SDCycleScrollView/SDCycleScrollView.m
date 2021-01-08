@@ -594,6 +594,10 @@ NSString * const ID = @"SDCycleScrollViewCell";
         return cell;
     }
     
+    if (![cell isKindOfClass:[SDCollectionViewCell class]]) {
+        return cell;
+    }
+    
     NSString *imagePath = self.imagePathsGroup[itemIndex];
     
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
